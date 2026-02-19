@@ -28,10 +28,8 @@ This project demonstrates a professional approach to deploying a web-based portf
 
 
 
+📈 Modular Design Features: The code is divided into logical blocks, making it easy to add new servers or storage.
 
-📈 Особливості реалізації
-Modular Design: Код розділений на логічні блоки, що дозволяє легко додавати нові сервери або сховища.
+Security First: All secrets and states are excluded in .gitignore, access to web resources is limited to the necessary ports.
 
-Security First: Всі секрети та стейти винесені в .gitignore, доступ до веб-ресурсів обмежений необхідними портами.
-
-Automation: Веб-сервер налаштовується автоматично при старті без ручного втручання.
+Automation: The web server is configured automatically at startup without manual intervention.
