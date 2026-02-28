@@ -22,33 +22,37 @@ resource "random_id" "suffix" {
   byte_length = 4
 }
 
-# 1. Виклик модуля Storage (S3)
+# ... (твій код provider та backend залишаємо без змін) ...
+
+# 1. Виклик модуля Storage (S3) - ЗАЛИШАЄМО АКТИВНИМ
 module "storage" {
   source      = "./modules/storage"
   bucket_name = "aleksandr-web-assets-${random_id.suffix.hex}"
 }
 
-# 2. Виклик модуля Network (Security Group)
+/* # 2. Виклик модуля Network (Security Group) - ЗАКОМЕНТОВАНО
 module "network" {
   source  = "./modules/network"
   sg_name = "allow_web_traffic_modular"
 }
 
-# 3. Виклик модуля Compute (EC2)
+# 3. Виклик модуля Compute (EC2) - ЗАКОМЕНТОВАНО
 module "compute" {
   source            = "./modules/compute"
   instance_type     = var.instance_type
   key_name          = var.key_name
-  security_group_id = module.network.security_group_id # Передаємо ID з іншого модуля
-  bucket_name       = module.storage.bucket_name       # Передаємо назву з іншого модуля
+  security_group_id = module.network.security_group_id 
+  bucket_name       = module.storage.bucket_name        
   region            = var.region
   server_name       = var.server_name
 }
+*/
 
 # 4. Модуль CDN (CloudFront)
 module "cdn" {
-  source         = "./modules/cdn"
-  ec2_public_dns = module.compute.public_dns # Нам потрібно додати цей output в модулі compute
+  source           = "./modules/cdn"
+  s3_bucket_domain = module.storage.bucket_regional_domain_name
+  s3_bucket_id     = module.storage.bucket_id
 }
 
 # Додай новий output, щоб дізнатися адресу свого сайту
@@ -56,10 +60,10 @@ output "website_url" {
   value = "https://${module.cdn.cdn_domain_name}"
 }
 # Отримуємо результати з модулів для виводу в консоль
-output "web_server_public_ip" {
+/*output "web_server_public_ip" {
   value = module.compute.public_dns
 }
 
 output "s3_bucket_name" {
   value = module.storage.bucket_name
-}
+}*/

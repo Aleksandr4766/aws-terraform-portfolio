@@ -1,4 +1,7 @@
-variable "ec2_public_dns" {
-  description = "Public DNS of the EC2 instance"
-  type        = string
+variable "s3_bucket_domain" {
+  type = string
+}
+
+variable "s3_bucket_id" {
+  type = string
 }
