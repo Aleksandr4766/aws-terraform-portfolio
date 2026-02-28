@@ -13,4 +13,4 @@
 my-aws-key
 
 #Ігноруємо файли .exe
- *.exe
+*.exe
