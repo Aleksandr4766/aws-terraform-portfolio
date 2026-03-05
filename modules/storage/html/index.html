@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Infrastructure Architect | Aleksandr</title>
+    <style>
+        /* Основні стилі сторінки */
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            padding: 50px; 
+            background: #f4f4f4; 
+        }
+        .container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            display: inline-block;
+            max-width: 800px; 
+            width: 90%;
+        }
+        h1 { 
+            color: #232f3e; 
+            font-size: 1.8em; 
+            margin-bottom: 25px;
+        }
+        .header-img {
+            width: 100%;            
+            height: auto;           
+            border-radius: 8px;     
+            border: 2px solid #ff9900;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+        .tag { 
+            background: #ff9900; 
+            color: white; 
+            padding: 5px 15px; 
+            border-radius: 5px; 
+            font-size: 0.9em; 
+            font-weight: bold;
+        }
+        p { color: #555; line-height: 1.6; }
+
+        /* Стилі для кнопок соцмереж */
+        .social-links {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .btn {
+            text-decoration: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: transform 0.2s, background 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+        .btn-linkedin {
+            background: #0077b5;
+            color: white !important;
+        }
+        .btn-email {
+            background: #232f3e;
+            color: white !important;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Oleksandr — Cloud Portfolio</h1>
+        <img src="ITSpecialist.jpg" alt="Oleksandr Sergienko" class="header-img">
+        
+        <p><span class="tag">Serverless Mode</span></p>
+        <p>This site is hosted on <strong>Amazon S3</strong> and delivered via <strong>CloudFront</strong>.</p>
+        <p>Deployed using <strong>Terraform Modules</strong>.</p>
+
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/aleksandrsergienko/" target="_blank" class="btn btn-linkedin">
+                LinkedIn
+            </a>
+            <a href="mailto:alex4766@gmail.com" class="btn btn-email">
+                Contact Email
+            </a>
+        </div>
+    </div>
+</body>
+</html>

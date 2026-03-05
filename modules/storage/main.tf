@@ -39,3 +39,24 @@ resource "aws_s3_bucket_policy" "public_read" {
     }]
   })
 }
+# --- ЗАВАНТАЖЕННЯ ФАЙЛІВ ---
+
+# 1. Завантажуємо index.html
+resource "aws_s3_object" "index" {
+  bucket       = aws_s3_bucket.this.id
+  key          = "index.html"
+  # Використовуємо path.module, щоб шлях завжди був правильним відносно модуля
+  source       = "${path.module}/html/index.html" 
+  content_type = "text/html"
+  # Додаємо це, щоб Terraform бачив зміни всередині файлу
+  etag         = filemd5("${path.module}/html/index.html")
+}
+
+# 2. Завантажуємо фото
+resource "aws_s3_object" "photo" {
+  bucket       = aws_s3_bucket.this.id
+  key          = "ITSpecialist.jpg"
+  source       = "${path.module}/html/ITSpecialist.jpg"
+  content_type = "image/jpeg" # Важливо для коректного відображення в браузері
+  etag         = filemd5("${path.module}/html/ITSpecialist.jpg")
+}
