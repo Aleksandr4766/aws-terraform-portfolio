@@ -3,17 +3,17 @@ name: Terraform & S3 Deploy
 on:
   push:
     branches:
-      - main
+      - main  # Переконайся, що в GitHub Desktop твоя гілка теж називається main
 
 jobs:
   terraform-job:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Оновлено до v4
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3  # Оновлено до v3
 
       - name: Terraform Init & Apply
         env:
@@ -21,13 +21,13 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           terraform init
-          terraform apply -auto-approve
+          # Додаємо -input=false, щоб робот не чекав на відповідь
+          terraform apply -auto-approve -input=false
 
       - name: Sync Files to S3
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          # Отримуємо назву бакета з output терраформа
           BUCKET_NAME=$(terraform output -raw s3_bucket_name)
-          aws s3 sync . s3://$BUCKET_NAME/ --exclude "*" --include "*.html" --include "*.jpg" --include "*.png" --include ".github/*"
+          aws s3 sync . s3://$BUCKET_NAME/ --exclude "*" --include "*.html" --include "*.jpg" --include "*.png" --exclude ".terraform/*" --exclude ".git/*"
