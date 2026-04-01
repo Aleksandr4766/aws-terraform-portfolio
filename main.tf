@@ -62,8 +62,9 @@ output "website_url" {
 # Отримуємо результати з модулів для виводу в консоль
 /*output "web_server_public_ip" {
   value = module.compute.public_dns
-}
+}*/
 
 output "s3_bucket_name" {
   value = module.storage.bucket_name
-}*/
+  description = "The name of the S3 bucket"
+}
