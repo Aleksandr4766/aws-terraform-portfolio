@@ -1,14 +1,16 @@
- name: Terraform & S3 Deploy
+name: Terraform & S3 Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  deploy:
+  terraform-job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -21,11 +23,11 @@ jobs:
           terraform init
           terraform apply -auto-approve
 
-      - name: Upload index.html to S3
+      - name: Sync Files to S3
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          # Ця команда автоматично візьме назву бакета з Terraform output
+          # Отримуємо назву бакета з output терраформа
           BUCKET_NAME=$(terraform output -raw s3_bucket_name)
-          aws s3 cp index.html s3://$BUCKET_NAME/index.html
+          aws s3 sync . s3://$BUCKET_NAME/ --exclude "*" --include "*.html" --include "*.jpg" --include "*.png" --include ".github/*"
